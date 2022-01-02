@@ -1,0 +1,41 @@
+// You are given a list of songs where the ith song has a duration of time[i] seconds.
+
+// Return the number of pairs of songs for which their total duration in seconds is divisible by 60. Formally, we want the number of indices i, j such that i < j with (time[i] + time[j]) % 60 == 0
+
+
+// Input: time = [30,20,150,100,40]
+// Output: 3
+// Explanation: Three pairs have a total duration divisible by 60:
+// (time[0] = 30, time[2] = 150): total duration 180
+// (time[1] = 20, time[3] = 100): total duration 120
+// (time[1] = 20, time[4] = 40): total duration 60
+    
+    class Solution {
+public:
+  
+    int numPairsDivisibleBy60(vector<int>& time){
+        
+        
+       vector<int>countNumbersMod60(60 , 0);
+        int totalPairs = 0;
+        
+        for(auto &element : time){
+            
+            int remainder = element % 60;
+            countNumbersMod60[remainder]++;
+        }
+        
+        totalPairs = (countNumbersMod60[0] * (countNumbersMod60[0] - 1))/2;
+        totalPairs += (countNumbersMod60[30] * (countNumbersMod60[30] - 1))/2;
+        
+        
+        for(int i=1; i<=29; i++){
+            
+            totalPairs += countNumbersMod60[i] * countNumbersMod60[60-i];
+            
+        }
+        
+        return totalPairs;
+    }
+};
+        
